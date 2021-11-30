@@ -51,15 +51,6 @@ class MovieAdapter @Inject constructor(private val bindViewHolder: (Movie, View)
         val movie = movieList[position]
         holder.bind(movie)
 
-//        holder.binding.apply {
-//            movieImage.loadImageFromGlide("https://image.tmdb.org/t/p/w300${movie.posterPath}")
-//            movieName.text = movie.title
-//        }
-//
-//        holder.binding.itemMovieCard.setOnClickListener { onMovieClick.invoke(movie) }
-//
-//        holder.binding.movieFavorite.setOnClickListener { onMovieClick.invoke(movie) }
-
     }
 
     override fun getItemCount(): Int {

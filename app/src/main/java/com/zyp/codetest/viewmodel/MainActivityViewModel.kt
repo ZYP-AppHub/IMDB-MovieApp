@@ -24,16 +24,7 @@ class MainActivityViewModel @Inject constructor(private val apiRepository: ApiRe
 
     val errorMessage = MutableLiveData<String>()
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.d("tag", "getUpcomingMovies Error: ${throwable.message}")
-        _upcomingMovies.postValue(emptyList())
-        _popularMovies.postValue(emptyList())
-        throwable.message?.let { onError(it) }
-        throwable.printStackTrace()
-    }
-
     fun getUpcomingMovies() {
-
         viewModelScope.launch(exceptionHandler) {
             val response = apiRepository.getUpcomingMovie(1)
             if (response.isSuccessful) {
@@ -56,6 +47,14 @@ class MainActivityViewModel @Inject constructor(private val apiRepository: ApiRe
                 Log.d("tag", "getPopularMovies Error: ${response.message()}")
             }
         }
+    }
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.d("tag", "CoroutineException Error: ${throwable.message}")
+        _upcomingMovies.postValue(emptyList())
+        _popularMovies.postValue(emptyList())
+        throwable.message?.let { onError(it) }
+        throwable.printStackTrace()
     }
 
     private fun onError(message: String) {
